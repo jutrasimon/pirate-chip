@@ -12,8 +12,27 @@ function harness(){const els=new Map(),get=s=>{if(!els.has(s))els.set(s,new Elem
  const all=s=>s==='dialog'?['#peek','#instructions','#result','#intent-detail'].map(get):s==='.coin'?get('#coins').children.map(e=>e.querySelector('.coin')):[];
  const context={...engine,tone(){},noise(){},audioSettings:()=>({sounds:true,music:true}),toggleAudio(){},console,document:{addEventListener(){},querySelector:get,querySelectorAll:all,createElement:()=>new Element(),body:new Element()},matchMedia:()=>({matches:true}),Image:class{set src(v){queueMicrotask(()=>failImages?this.onerror():this.onload());}},ResizeObserver:class{observe(){}},innerWidth:390,innerHeight:844,devicePixelRatio:1,addEventListener(){},performance:{now:()=>0},requestAnimationFrame:()=>1,setTimeout(fn){timers.push(fn);return fn;},clearTimeout(fn){timers=timers.filter(t=>t!==fn);}};
  vm.createContext(context);const source=fs.readFileSync(new URL('../dist/game.js',import.meta.url),'utf8').replace(/^import .*?;\n/gm,'');vm.runInContext(source,context);
- return{get,run:s=>vm.runInContext(s,context),fail:()=>{failImages=true;},async settle(){for(let i=0;i<30;i++){const current=timers;timers=[];current.forEach(t=>t());await Promise.resolve();}}};
+ return{get,run:s=>vm.runInContext(s,context),fail:()=>{failImages=true;},async step(){const current=timers;timers=[];current.forEach(t=>t());await Promise.resolve();},async settle(){for(let i=0;i<30;i++){const current=timers;timers=[];current.forEach(t=>t());await Promise.resolve();}}};
 }
 test('controller loads each scene and transitions through all five fights',async()=>{const h=harness();await h.settle();assert.equal(h.run('state.busy'),false);assert.equal(h.get('#scene-loading').hidden,true);h.run('state.hp=17');for(let i=0;i<5;i++){h.run("state.enemy=1;state.coins=[{name:'Test',faces:[['attaque',6],['defense',3]],face:0,used:false}];state.actions=2;play(0)");await h.settle();assert.equal(h.get('#result').open,true);assert.equal(h.run('state.defeated'),i+1);if(i<4){h.run('state.rewardClaimed=true;advance()');await h.settle();assert.equal(h.run('state.hp'),17);assert.equal(h.run('state.encounter'),i+1);assert.equal(h.run('state.busy'),false);assert.equal(h.get('.pirate-sprite.attack').src,h.run('currentEnemy(state).art.attack'));}}assert.equal(h.run('state.outcome'),'victory');assert.equal(h.get('#again').textContent,'New run ↻');});
 test('reset during an enemy turn invalidates old async actions',async()=>{const h=harness();await h.settle();h.run('endTurn();reset()');await h.settle();assert.equal(h.run('state.hp'),28);assert.equal(h.run('state.round'),1);assert.equal(h.run('state.defeated'),0);assert.equal(h.run('state.busy'),false);});
 test('an asset failure keeps controls locked and offers retry',async()=>{const h=harness();await h.settle();h.fail();h.run("imageLoads.clear();prepareScene()");await h.settle();assert.equal(h.run('state.busy'),true);assert.equal(h.get('#retry-scene').hidden,false);assert.equal(h.get('#end').disabled,true);});
+
+test('enemy intent stays held until the turn announcement and input unlocks after dealing',async()=>{
+ const h=harness();await h.settle();
+ h.run("state.order=['captain','gunner','ironjaw','duelist','baron'];state.step=0;endTurn()");
+ assert.equal(h.run('heldIntent.value'),5);
+ for(let i=0;i<20&&h.get('#turn-banner').hidden;i++)await h.step();
+ assert.equal(h.get('#turn-banner').hidden,false);
+ assert.equal(h.run('heldIntent.value'),5);
+ assert.equal(h.run('state.round'),1);
+ assert.equal(h.run('state.busy'),true);
+ for(let i=0;i<10&&h.run('state.round')===1;i++)await h.step();
+ assert.equal(h.run('state.round'),2);
+ assert.equal(h.run('heldIntent'),null);
+ assert.equal(h.run('state.busy'),true);
+ await h.settle();
+ assert.equal(h.get('#turn-banner').hidden,true);
+ assert.equal(h.run('state.busy'),false);
+ assert.equal(h.run('getIntent(state).kind'),'block');
+});

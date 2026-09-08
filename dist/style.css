@@ -56,7 +56,7 @@ button.intent{color:var(--ink);padding:0;cursor:pointer}
 .intent-word{font-size:18px!important}
 #enemy-status{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);z-index:6;padding:5px 9px;background:var(--ink);color:var(--cream);border:1px solid #f6eace70;border-radius:6px;font:700 14px/1 'Barlow Condensed',Impact,sans-serif;white-space:nowrap;pointer-events:none}
 #enemy-status[hidden]{display:none}
-.enemy[data-stance="riposte"] .idle{filter:drop-shadow(2px 1px 0 #f6eace) drop-shadow(-2px -1px 0 #ed492c)}
+
 #scene-loading{position:absolute;inset:0;z-index:10;background:#071f2ecc;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:var(--cream);font:700 20px 'Barlow Condensed',Impact,sans-serif}
 #scene-loading[hidden]{display:none}
 #retry-scene{background:var(--cream);border:0;color:var(--ink);border-radius:8px;padding:10px 22px;font:700 18px 'Barlow Condensed',Impact,sans-serif}
@@ -103,3 +103,21 @@ button.intent{gap:5px;min-width:80px;width:auto;padding:0 12px;min-height:58px}.
 .encounter{top:65px;left:auto;right:20px}.encounter #battle-count{font-size:15px;background:var(--ink);padding:5px 7px;border-bottom:2px solid var(--gold)}
 button#enemy-status{top:99px;max-width:190px;font-size:16px}
 #peek-faces .face-card p{font:400 14px/1.4 'DM Sans',sans-serif;text-align:left;margin:0}
+
+/* Shared, deliberate help; decorative layers never intercept controls. */
+.arena>header{pointer-events:none}.arena>header button{pointer-events:auto}
+.enemy,.encounter{pointer-events:none}
+button.intent,button#enemy-status{pointer-events:auto;z-index:8}
+button#enemy-status{min-height:44px}
+.info-mark{pointer-events:none}
+.coin-help{position:absolute;right:-2px;top:3px;z-index:4;display:flex;align-items:center;justify-content:center;padding:2px}
+.coin-help::after{content:'';position:absolute;inset:-7px}
+.forged-badge{display:flex;align-items:center;justify-content:center;gap:0;padding:2px}
+.forged-badge svg{width:17px;height:18px}.forged-badge svg+svg{width:12px}
+#tooltip{padding:9px 11px;font-size:14px;line-height:1.4;box-shadow:2px 3px 0 #0004}
+.enemy[data-stance="riposte"] .pirate-sprite{filter:drop-shadow(2px 0 0 #ffd447) drop-shadow(-2px 0 0 #ffd447) drop-shadow(0 2px 0 #ffd447) drop-shadow(0 -2px 0 #ffd447) drop-shadow(0 0 9px #ffc829a0)}
+.enemy[data-shield="active"] .pirate-sprite{filter:drop-shadow(2px 0 0 #69cfff) drop-shadow(-2px 0 0 #69cfff) drop-shadow(0 2px 0 #69cfff) drop-shadow(0 -2px 0 #69cfff) drop-shadow(0 0 9px #36baffb0)}
+.enemy[data-stance="riposte"][data-shield="active"] .pirate-sprite{filter:drop-shadow(2px 0 0 #ffd447) drop-shadow(-2px 0 0 #ffd447) drop-shadow(0 2px 0 #ffd447) drop-shadow(0 -2px 0 #ffd447) drop-shadow(0 0 5px #69cfff) drop-shadow(0 0 11px #36baff)}
+#turn-banner{position:absolute;top:44%;left:0;right:0;z-index:9;text-align:center;background:#071f2ef0;color:var(--gold);border-block:2px solid var(--gold);padding:15px 8px;font:900 42px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:4px;pointer-events:none}
+#turn-banner[hidden]{display:none}
+#result-story strong{font-style:normal}
