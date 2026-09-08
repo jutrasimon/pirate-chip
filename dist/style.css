@@ -125,3 +125,12 @@ button#enemy-status{min-height:44px}
 .header-buttons{flex-direction:column;align-items:center;gap:4px}.build-version{font:600 12px/1.2 "DM Sans",sans-serif;color:var(--cream);background:var(--ink);border-radius:3px;padding:2px 4px}.settings-version{text-align:center;font-size:14px;margin:-10px 0 12px}
 
 .encounter{top:84px}
+
+/* Desktop keeps a portrait composition instead of stretching with monitor height. */
+@media(min-width:600px){
+ body{padding:16px;min-height:100svh;display:grid;place-items:center}
+ #game{width:clamp(340px,calc((100svh - 32px) * 9 / 16),470px);max-width:100%;height:auto;min-height:0;aspect-ratio:9/16;margin:0 auto}
+ .arena{min-height:0}
+ .play{flex:0 0 32%;min-height:220px}
+ .enemy{top:155px}
+}

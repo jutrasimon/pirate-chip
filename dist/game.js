@@ -3,7 +3,7 @@ import {createRun,currentEnemy,ENEMIES,playCoin,resolveEnemy,nextTurn,nextCombat
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const paths={attaque:'<path d="M24 3 13 7 6 17l4 4 10-7 4-11ZM7 19l-3-3-2 2 4 4-4 4 2 2 4-4 4 4 2-2-3-3-4-4Z"/>',defense:'<path d="M16 2C12 5 7 6 3 6v9c0 8 6 13 13 17 7-4 13-9 13-17V6c-4 0-9-1-13-4Zm0 4c4 2 7 3 10 3v6c0 6-4 11-10 14C10 26 6 21 6 15V9c3 0 6-1 10-3Zm0 3v16c5-4 7-7 7-11v-3l-7-2Z"/>',actions:'<path d="M16 1c2 9 5 12 15 15-10 2-13 5-15 15C14 21 11 18 1 16 11 13 14 10 16 1Z"/>',retournement:'<path d="M27 3v11H16l4-4a9 9 0 0 0-13 6H2A14 14 0 0 1 24 6l3-3ZM5 29V18h11l-4 4a9 9 0 0 0 13-6h5A14 14 0 0 1 8 26l-3 3Z"/>'};
 const icon=t=>`<svg viewBox="0 0 32 34" fill="currentColor" aria-hidden="true">${paths[t]}</svg>`;
-const VERSION='0.2.0';
+const VERSION='0.2.1';
 $$('[data-version]').forEach(el=>el.textContent=`v${VERSION}`);
 const effects={attaque:'Attack',defense:'Block',actions:'Actions next turn',retournement:'Flip'};
 let state,level=2,epoch=0,poseTimer,heldIntent=null;const motion=matchMedia('(prefers-reduced-motion: reduce)');

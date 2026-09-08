@@ -1,10 +1,18 @@
 # Coin Pouch Game
 
-## 🎮 [Jouer au prototype / Play now](https://coin-pouch-juice.jutrasimon.chatgpt.site)
+## 🎮 [Jouer au prototype / Play now](https://jutrasimon.github.io/pirate-chip/)
 
 **Sur téléphone ou ordinateur, directement dans le navigateur. Rien à installer.**
 
+Version du code : **v0.2.1**. Le lien GitHub Pages sera disponible après l’activation initiale ci-dessous.
+
 Mobile-first browser pirate combat prototype. English UI, Flibuste Pop art direction.
+
+## GitHub Pages
+
+One-time setup: in **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**. Then open **Actions → Publish game to GitHub Pages → Run workflow** on `main`.
+
+The workflow validates the game and publishes only `dist`. Future changes to the game on `main` deploy automatically. A successful workflow's `github-pages` deployment contains the live URL. Private repositories require a GitHub plan that supports Pages.
 
 ## Run locally
 
