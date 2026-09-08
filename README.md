@@ -1,5 +1,9 @@
 # Coin Pouch Game
 
+## 🎮 [Jouer au prototype / Play now](https://coin-pouch-juice.jutrasimon.chatgpt.site)
+
+**Sur téléphone ou ordinateur, directement dans le navigateur. Rien à installer.**
+
 Mobile-first browser pirate combat prototype. English UI, Flibuste Pop art direction.
 
 ## Run locally
