@@ -121,3 +121,7 @@ button#enemy-status{min-height:44px}
 #turn-banner{position:absolute;top:44%;left:0;right:0;z-index:9;text-align:center;background:#071f2ef0;color:var(--gold);border-block:2px solid var(--gold);padding:15px 8px;font:900 42px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:4px;pointer-events:none}
 #turn-banner[hidden]{display:none}
 #result-story strong{font-style:normal}
+
+.header-buttons{flex-direction:column;align-items:center;gap:4px}.build-version{font:600 12px/1.2 "DM Sans",sans-serif;color:var(--cream);background:var(--ink);border-radius:3px;padding:2px 4px}.settings-version{text-align:center;font-size:14px;margin:-10px 0 12px}
+
+.encounter{top:84px}
